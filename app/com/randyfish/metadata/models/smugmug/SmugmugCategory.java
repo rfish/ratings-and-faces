@@ -8,15 +8,15 @@ import java.util.List;
 /**
  * Data holder for a category
  */
-public class Category {
+public class SmugmugCategory {
 
     public long id = -1;
     public String name = null;
-    public List<Album> albums = new ArrayList<Album>();
-    public List<Category> subcategories = new ArrayList<Category>();
+    public List<SmugmugAlbum> albums = new ArrayList<SmugmugAlbum>();
+    public List<SmugmugCategory> subcategories = new ArrayList<SmugmugCategory>();
 
-    public static Category parseFromJsonNode(JsonNode categoryNode) {
-        Category category = new Category();
+    public static SmugmugCategory parseFromJsonNode(JsonNode categoryNode) {
+        SmugmugCategory category = new SmugmugCategory();
         JsonNode categoryIdNode = categoryNode.get("id");
         if (categoryIdNode != null) {
             category.id = categoryIdNode.getLongValue();
@@ -32,7 +32,7 @@ public class Category {
             for (int albumIndex = 0; albumIndex < albumsNode.size(); albumIndex++) {
                 JsonNode albumNode = albumsNode.get(albumIndex);
                 if (albumNode != null) {
-                    Album album = Album.parseFromJsonNode(albumNode);
+                    SmugmugAlbum album = SmugmugAlbum.parseFromJsonNode(albumNode);
                     if (album != null) {
                         category.albums.add(album);
                     }
@@ -45,7 +45,7 @@ public class Category {
             for (int subCategoryIndex = 0; subCategoryIndex < subCategoriesNode.size(); subCategoryIndex++) {
                 JsonNode subCategoryNode = subCategoriesNode.get(subCategoryIndex);
                 if (subCategoryNode != null) {
-                    Category subCategory = parseFromJsonNode(subCategoryNode);
+                    SmugmugCategory subCategory = parseFromJsonNode(subCategoryNode);
                     if (subCategory != null) {
                         category.subcategories.add(subCategory);
                     }

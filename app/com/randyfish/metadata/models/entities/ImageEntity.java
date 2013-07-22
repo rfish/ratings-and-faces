@@ -4,8 +4,10 @@ import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.PrePersist;
+import com.randyfish.metadata.models.smugmug.SmugmugExtendedImage;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class ImageEntity {
     /**
      * This is the id in the smugmug system
      */
-    public String imageId;
+    public Long imageId;
 
     /**
      * This is the key in the smugmug system
@@ -52,6 +54,48 @@ public class ImageEntity {
     @PrePersist
     public void prePersist() {
         this.lastChecked = new Date();
+    }
+
+    public static ImageEntity createFromExtendedImage(SmugmugExtendedImage extendedImage) {
+        ImageEntity entity = new ImageEntity();
+        entity.imageId = extendedImage.imageId;
+        entity.imageKey = extendedImage.imageKey;
+
+        if (extendedImage.caption != null) {
+            entity.caption = extendedImage.caption;
+        }
+
+        if (extendedImage.filename != null) {
+            entity.filename = extendedImage.filename;
+        }
+
+        if (extendedImage.format != null) {
+            entity.format = extendedImage.format;
+        }
+
+        entity.width = extendedImage.width;
+        entity.height = extendedImage.height;
+        if (extendedImage.keywords != null) {
+            entity.keywords = extendedImage.keywords;
+        }
+
+        entity.fileSize = extendedImage.fileSize;
+
+        if (extendedImage.urls != null) {
+            entity.urls = new ArrayList<UrlEntity>();
+            for (SmugmugExtendedImage.UrlHolder holder : extendedImage.urls) {
+                UrlEntity url = new UrlEntity();
+                url.urlType = holder.urlType;
+                url.url = holder.url;
+                entity.urls.add(url);
+            }
+        }
+
+        if (extendedImage.type != null) {
+            entity.type = extendedImage.type;
+        }
+
+        return entity;
     }
 
     @Embedded

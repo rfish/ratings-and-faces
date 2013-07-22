@@ -22,7 +22,7 @@ public class Image {
         this.id = entity.id.toString();
     }
 
-    public String getImageId() {
+    public long getImageId() {
         return entity.imageId;
     }
 

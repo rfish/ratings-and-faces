@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class UserTreeData {
 
-    public List<Category> categories = new ArrayList<Category>();
+    public List<SmugmugCategory> categories = new ArrayList<SmugmugCategory>();
 
     public UserTreeData() {
 
@@ -27,7 +27,7 @@ public class UserTreeData {
                 for (int categoryIndex = 0; categoryIndex < categoriesNode.size(); categoryIndex++) {
                     JsonNode categoryNode = categoriesNode.get(categoryIndex);
                     if (categoryNode != null) {
-                        Category category = Category.parseFromJsonNode(categoryNode);
+                        SmugmugCategory category = SmugmugCategory.parseFromJsonNode(categoryNode);
                         if (category != null) {
                             userTree.categories.add(category);
                         }

@@ -19,6 +19,10 @@ public class Category {
         this.id = entity.id.toString();
     }
 
+    public String getId() {
+        return id;
+    }
+
     public long getCategoryId() {
         return entity.categoryId;
     }
